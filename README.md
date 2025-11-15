@@ -10,10 +10,10 @@ Please add your user to sudoers in order to use the program.
 
 command-line usage examples:
 
-  sl u         --> update&upgrade installed programs and slackbuilds
-  sl s 'name'  --> search for a package or slackbuild 'name'
-  sl i 'name'  --> install 'name'
-  sl r 'name   --> remove name
+    sl u         --> update&upgrade installed programs and slackbuilds
+    sl s 'name'  --> search for a package or slackbuild 'name'
+    sl i 'name'  --> install 'name'
+    sl r 'name   --> remove name
 
 An launcher in installed in the programs menu that runs silk-shell,
 which streamlines operations. In this case you can type the commands
