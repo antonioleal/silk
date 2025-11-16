@@ -1,5 +1,4 @@
 <img src="silk.png"  alt="Silk" style="width:15%; height:auto;"/>
-</br>
 
 Silk is a practical front end to various slackware package management
 tools, namely slackpkg, sbopkg, slapt-get and slapt-src.
@@ -19,7 +18,7 @@ command-line usage examples:
     silk i 'name'  --> install 'name'
     silk r 'name   --> remove name
 
-An launcher in installed in the programs menu that runs silk-shell,
+A launcher is installed in the programs menu for silk-shell,
 which streamlines operations. In this case you can type the commands
 directly at the "Silk>" prompt, for example:
 
