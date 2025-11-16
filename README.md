@@ -1,6 +1,4 @@
-<div style="text-align: center">
-        <img src="silk.png"  alt="Silk" style="width:15%; height:auto;"/>
-</div>
+<img src="silk.png"  alt="Silk" style="width:15%; height:auto;"/>
 </br>
 
 Silk is a practical front end to various slackware package management
