@@ -1,5 +1,7 @@
 <img src="silk.png"  alt="Silk" style="width:15%; height:auto;"/>
 
+## Description
+
 Silk is a practical front end to various slackware package management
 tools, namely slackpkg, sbopkg, slapt-get and slapt-src.
 It implements the more common commands and simplifies the operation
@@ -30,3 +32,14 @@ Notes:
 
 Silk is written in Python.
 
+## Installation
+
+To install Silk please type:
+
+    sudo ./install.sh
+
+## Uninstallation
+
+To delete Silk from your system please type:
+
+    sudo ./uninstall.sh
