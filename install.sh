@@ -18,5 +18,7 @@ install -D -m0755 silk-shell $DEST/silk-shell
 cp silk.png /usr/share/pixmaps
 cp silk.desktop /usr/share/applications
 
-
-
+rm -rf /usr/bin/sl
+rm -rf /usr/bin/slapt
+ln -s /usr/bin/silk /usr/bin/sl
+ln -s /usr/bin/silk /usr/bin/slapt

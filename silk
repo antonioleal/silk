@@ -65,7 +65,7 @@ def color2int(color):
 
 def usage(config):
     print (f"Silk {VERSION} is a practical frontend to various slackware package management tools.")
-    print (f"It streamlines the package management by running the tools in order:")
+    print (f"The following order is defined:")
     setcolor(BOLD, WHITE, BLACK)
     aux = []
     for f in FUNCS:
