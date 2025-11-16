@@ -43,13 +43,17 @@ BLACK, RED, GREEN, YELLOW, BLUE, PURPLE, CYAN, WHITE = [30, 31, 32, 33, 34, 35, 
 def checkcolor(style, foreground, background):
     if style not in [NORMAL, BOLD, LIGHT, ITALIC, UNDERLINE, BLINK]: return False
     if foreground not in [BLACK, RED, GREEN, YELLOW, BLUE, PURPLE, CYAN, WHITE]: return False
-    if background not in [BLACK, RED, GREEN, YELLOW, BLUE, PURPLE, CYAN, WHITE]: return False
+    if background != '':
+        if background not in [BLACK, RED, GREEN, YELLOW, BLUE, PURPLE, CYAN, WHITE]: return False
     return True
-def defcolor(style, foreground, background):
+def defcolor(style, foreground, background=''):
     if checkcolor(style, foreground, background):
-        return f'{ESC}{style};{foreground};{background+10}m'
+        if background == '':
+            return f'{ESC}{style};{foreground}m'
+        else:
+            return f'{ESC}{style};{foreground};{background+10}m'
     return ''
-def setcolor(style, foreground, background):
+def setcolor(style, foreground, background=''):
     print(defcolor(style,foreground,background), end='')
 def undefcolor():
     return f'{ESC}0;0m'
@@ -66,7 +70,7 @@ def color2int(color):
 def usage(config):
     print (f"Silk {VERSION} is a practical frontend to various slackware package management tools.")
     print (f"The following order is defined:")
-    setcolor(BOLD, WHITE, BLACK)
+    setcolor(BOLD, BLACK)
     aux = []
     for f in FUNCS:
         fsetting = f.__name__.replace('_','-')
@@ -283,7 +287,6 @@ def slackpkg(command, options, programs=""):
         return False
 
 def setconfig():
-    setcolor(BOLD, RED, BLACK)
     home = os.path.expanduser('~')
     rc = f'{home}/.config/silkrc'
     config = configparser.ConfigParser()
@@ -297,20 +300,23 @@ def setconfig():
     else:
         createfile = True
     if createfile:
-        print(f'New {home}/.config/silkrc config file is invalid/older, creating a new one...\n')
+        setcolor(BOLD, RED)
+        print(f'Warning: {home}/.config/silkrc config file is invalid/older, creating a new one...')
+        resetcolor()
+        print(f'Please re-run the program now with the correct settings.\n')
         with open(f'{home}/.config/silkrc', 'w') as file:
             file.writelines('[settings]\n')
             file.writelines('version = ' + str(VERSION) + '\n\n')
-            file.writelines('slapt-get-colors = LIGHT CYAN BLACK\n')
-            file.writelines('slapt-src-colors = NORMAL YELLOW BLACK\n')
-            file.writelines('sbopkg-colors = NORMAL GREEN BLACK\n')
-            file.writelines('slackpkg-colors = LIGHT BLUE BLACK\n\n')
+            file.writelines('slapt-get-colors = NORMAL CYAN\n')
+            file.writelines('slapt-src-colors = NORMAL YELLOW\n')
+            file.writelines('sbopkg-colors = NORMAL GREEN\n')
+            file.writelines('slackpkg-colors = NORMAL BLUE\n\n')
             file.writelines('# order of execution (write 0 to prevent running):\n')
             file.writelines('slapt-get = 1\n')
             file.writelines('slapt-src = 2\n')
             file.writelines('sbopkg = 0\n')
             file.writelines('slackpkg = 4\n')
-    resetcolor()
+            exit(0)
     return config
 
 def main():
@@ -338,7 +344,7 @@ def main():
                 fsetting = f.__name__.replace('_','-')
                 if str(t) == config.get('settings',fsetting):
                     c = config.get('settings', fsetting + '-colors').split()
-                    setcolor(style2int(c[0]), color2int(c[1]), color2int(c[2]))
+                    setcolor(style2int(c[0]), color2int(c[1]))
                     if not f(command, options, programs):
                         usage(config)
                         return
