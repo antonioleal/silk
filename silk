@@ -347,6 +347,7 @@ def main():
                     setcolor(style2int(c[0]), color2int(c[1]))
                     if not f(command, options, programs):
                         usage(config)
+                        resetcolor()
                         return
                     resetcolor()
 
