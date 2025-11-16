@@ -24,9 +24,9 @@ directly at the "Silk>" prompt, for example:
 
     Silk> u
 
-Notes:  'sl' and 'slapt' are symlinks to 'silk'. Use them as aliases.
-        This program conflicts with the 'sl' package found in
-        SlackBuilds.org,do not install both at the same time.
+Notes:
+  * 'sl' and 'slapt' are symlinks to 'silk'. Use them as aliases for 'silk'.
+  * This program conflicts with the 'sl' package found in SlackBuilds.org, do not install both at the same time.
 
-        Silk is written in Python.
+Silk is written in Python.
 
