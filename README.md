@@ -1,4 +1,7 @@
-![](<img src="https://github.com/antonioleal/silk/" Silk src="https://github.com/antonioleal/silk/blob/main/silk.png" width="128" height="128" />)
+<div style="text-align: center">
+        <img src="silk.png"  alt="Silk" style="width:15%; height:auto;"/>
+</div>
+</br>
 
 Silk is a practical front end to various slackware package management
 tools, namely slackpkg, sbopkg, slapt-get and slapt-src.
@@ -29,3 +32,4 @@ Notes:  'sl' and 'slapt' are symlinks to 'silk'. Use them as aliases.
         SlackBuilds.org,do not install both at the same time.
 
         Silk is written in Python.
+
