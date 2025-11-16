@@ -46,14 +46,20 @@ del os, histfile, readline, rlcompleter
 # show help in first run
 exec(open("/usr/bin/silk").read())
 
+endmsg = '\nProgram terminated by user.'
 while(True):
     print('You are running silk-shell, please type your commands directly.')
     print('Type "q", "quit" or press ctrl-d to end your session.\n')
     try:
         cmd = input('Silk> ')
     except EOFError:
+        print(endmsg)
+        exit(0)
+    except KeyboardInterrupt:
+        print(endmsg)
         exit(0)
     if cmd.lower() == 'q' or cmd.lower() == 'quit':
+        print(endmsg)
         exit(0)
     sys.argv = ['/usr/bin/silk'] + cmd.split()
     exec(open("/usr/bin/silk").read())

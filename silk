@@ -34,7 +34,7 @@ import os
 import subprocess
 import configparser
 
-VERSION = '1.0.0'
+VERSION = '1.0.1'
 
 # https://stackabuse.com/how-to-print-colored-text-in-python/
 ESC = '\033['
@@ -64,8 +64,8 @@ def color2int(color):
 
 
 def usage(config):
-    print (f"Silk is a practical frontend to various slackware package management tools.")
-    print (f"It will run the tools in the order:")
+    print (f"Silk {VERSION} is a practical frontend to various slackware package management tools.")
+    print (f"It streamlines the package management by running the tools in order:")
     setcolor(BOLD, WHITE, BLACK)
     aux = []
     for f in FUNCS:
@@ -79,8 +79,6 @@ def usage(config):
     resetcolor()
     print ()
     print ("Usage: silk command [options] [programs]")
-    print ("       slapt command [options] [programs]")
-    print ("       sl command [options] [programs]")
     print ()
     print ("commands:")
     print ("    u, update                    retrieve metadata related to packages and slackbuilds,")
@@ -98,7 +96,6 @@ def usage(config):
     print ("    -y                           do not prompt for install/upgrade, assume yes")
     print ("    -o[1-4]                      select which tools (1-4) to run and the order of execution")
     print ("")
-    print (f"The program defines the symlinks 'slapt' and 'sl' pointing to the 'silk'.")
     print (f"Please also check ~/.config/silkrc settings to decide which tools you want to run.\n")
 
 def execute(lines):
@@ -130,11 +127,11 @@ def slapt_get(command, options, programs=""):
             localops = localops + "-y "
     localops = localops.strip()
     if localcmd != "":
-        print(f'++++ Running sudo /usr/sbin/slapt-get {localops} {localcmd} {programs}')
-        lines = ['#!/bin/bash\n\n', f'sudo /usr/sbin/slapt-get {localops} {localcmd} {programs}\n']
+        print(f'++++ Running sudo /usr/sbin/slapt-get {localops}{localcmd} {programs}')
+        lines = ['#!/bin/bash\n\n', f'sudo /usr/sbin/slapt-get {localops}{localcmd} {programs}\n']
         if localcmd == '-u':
-            print(f'++++ Running sudo /usr/sbin/slapt-get {localops} --upgrade {programs}\n')
-            lines.append(f'sudo /usr/sbin/slapt-get {localops} --upgrade {programs}\n')
+            print(f'++++ Running sudo /usr/sbin/slapt-get {localops}--upgrade {programs}\n')
+            lines.append(f'sudo /usr/sbin/slapt-get {localops}--upgrade {programs}\n')
         execute(lines)
         return True
     else:
@@ -162,11 +159,11 @@ def slapt_src(command, options, programs=""):
             localops = localops + "-y "
     localops = localops.strip()
     if localcmd != "":
-        print(f'++++ Running sudo /usr/bin/slapt-src {localops} {localcmd} {programs}')
-        lines = ['#!/bin/bash\n\n', f'sudo /usr/bin/slapt-src {localops} {localcmd} {programs}\n']
+        print(f'++++ Running sudo /usr/bin/slapt-src {localops}{localcmd} {programs}')
+        lines = ['#!/bin/bash\n\n', f'sudo /usr/bin/slapt-src {localops}{localcmd} {programs}\n']
         if localcmd == '-u':
-            print(f'++++ Running sudo /usr/bin/slapt-src {localops} --upgrade-all {programs}\n')
-            lines.append(f'sudo /usr/bin/slapt-src {localops} --upgrade-all {programs}\n')
+            print(f'++++ Running sudo /usr/bin/slapt-src {localops}--upgrade-all {programs}\n')
+            lines.append(f'sudo /usr/bin/slapt-src {localops}--upgrade-all {programs}\n')
         execute(lines)
         return True
     else:
@@ -304,10 +301,10 @@ def setconfig():
         with open(f'{home}/.config/silkrc', 'w') as file:
             file.writelines('[settings]\n')
             file.writelines('version = ' + str(VERSION) + '\n\n')
-            file.writelines('slapt-get-colors = NORMAL CYAN BLACK\n')
+            file.writelines('slapt-get-colors = LIGHT CYAN BLACK\n')
             file.writelines('slapt-src-colors = NORMAL YELLOW BLACK\n')
             file.writelines('sbopkg-colors = NORMAL GREEN BLACK\n')
-            file.writelines('slackpkg-colors = NORMAL WHITE BLACK\n\n')
+            file.writelines('slackpkg-colors = LIGHT BLUE BLACK\n\n')
             file.writelines('# order of execution (write 0 to prevent running):\n')
             file.writelines('slapt-get = 1\n')
             file.writelines('slapt-src = 2\n')
