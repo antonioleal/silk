@@ -1,3 +1,5 @@
+![](<img src="https://github.com/antonioleal/silk/" Silk src="https://github.com/antonioleal/silk/blob/main/silk.png" width="128" height="128" />)
+
 Silk is a practical front end to various slackware package management
 tools, namely slackpkg, sbopkg, slapt-get and slapt-src.
 It implements the more common commands and simplifies the operation
