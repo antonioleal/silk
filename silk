@@ -66,7 +66,6 @@ def color2int(color):
     values = { 'BLACK': 30, 'RED': 31, 'GREEN': 32, 'YELLOW': 33, 'BLUE': 34, 'PURPLE': 35, 'CYAN': 36, 'WHITE': 37 }
     return values[color]
 
-
 def usage(config):
     print (f"Silk {VERSION} is a practical frontend to various slackware package management tools.")
     print (f"The following order is defined:")
@@ -316,7 +315,7 @@ def setconfig():
             file.writelines('slapt-src = 2\n')
             file.writelines('sbopkg = 0\n')
             file.writelines('slackpkg = 4\n')
-            exit(0)
+        config.read(rc)
     return config
 
 def main():
@@ -349,6 +348,7 @@ def main():
                         usage(config)
                         resetcolor()
                         return
+                    print()
                     resetcolor()
 
 if __name__ == '__main__':
