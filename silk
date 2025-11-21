@@ -34,7 +34,7 @@ import os
 import subprocess
 import configparser
 
-VERSION = '1.0.1'
+VERSION = '1.0' # The version if the silkrc format
 
 # https://stackabuse.com/how-to-print-colored-text-in-python/
 ESC = '\033['
@@ -108,7 +108,7 @@ def execute(lines):
     os.system('chmod +x /tmp/silk')
     subprocess.call('/tmp/silk')
 
-def slapt_get(command, options, programs=""):
+def slapt_get(style, color, command, options, programs=""):
     localops = ''
     localcmd = ''
     if command in ['u', 'update']:
@@ -130,17 +130,17 @@ def slapt_get(command, options, programs=""):
             localops = localops + "-y "
     localops = localops.strip()
     if localcmd != "":
-        print(f'Silk> sudo /usr/sbin/slapt-get {localops}{localcmd} {programs}')
+        print(f'{defcolor(style, color)}Silk>{undefcolor()} sudo /usr/sbin/slapt-get {localops}{localcmd} {programs}')
         lines = ['#!/bin/bash\n\n', f'sudo /usr/sbin/slapt-get {localops}{localcmd} {programs}\n']
         if localcmd == '-u':
-            print(f'Silk> sudo /usr/sbin/slapt-get {localops}--upgrade {programs}')
+            print(f'{defcolor(style, color)}Silk>{undefcolor()} sudo /usr/sbin/slapt-get {localops}--upgrade {programs}')
             lines.append(f'sudo /usr/sbin/slapt-get {localops}--upgrade {programs}\n')
         execute(lines)
         return True
     else:
         return False
 
-def slapt_src(command, options, programs=""):
+def slapt_src(style, color, command, options, programs=""):
     localops = ''
     localcmd = ''
     if command in ['u', 'update']:
@@ -162,20 +162,20 @@ def slapt_src(command, options, programs=""):
             localops = localops + "-y "
     localops = localops.strip()
     if localcmd != "":
-        print(f'Silk> sudo /usr/bin/slapt-src {localops}{localcmd} {programs}')
+        print(f'{defcolor(style, color)}Silk>{undefcolor()} sudo /usr/bin/slapt-src {localops}{localcmd} {programs}')
         lines = ['#!/bin/bash\n\n', f'sudo /usr/bin/slapt-src {localops}{localcmd} {programs}\n']
         if localcmd == '-u':
-            print(f'Silk> sudo /usr/bin/slapt-src {localops}--upgrade-all {programs}')
+            print(f'{defcolor(style, color)}Silk>{undefcolor()} sudo /usr/bin/slapt-src {localops}--upgrade-all {programs}')
             lines.append(f'sudo /usr/bin/slapt-src {localops}--upgrade-all {programs}\n')
         execute(lines)
         return True
     else:
         return False
 
-def sbopkg(command, options, programs=""):
+def sbopkg(style, color, command, options, programs=""):
     if command in ['u', 'update']:
-        print(f'Silk> sudo /usr/sbin/sbopkg -r')
-        print(f'Silk> sudo /usr/sbin/sbopkg -c')
+        print(f'{defcolor(style, color)}Silk>{undefcolor()} sudo /usr/sbin/sbopkg -r')
+        print(f'{defcolor(style, color)}Silk>{undefcolor()} sudo /usr/sbin/sbopkg -c')
         lines = ['#!/bin/bash\n\n',
                  f'sudo /usr/sbin/sbopkg -r\n',
                  f'sudo /usr/sbin/sbopkg -c | sudo tee /tmp/silkout \n',
@@ -184,23 +184,23 @@ def sbopkg(command, options, programs=""):
         execute(lines)
         return True
     elif command in ['s', 'search']:
-        print(f'Silk> sudo /usr/sbin/sbopkg -g "{programs}"')
+        print(f'{defcolor(style, color)}Silk>{undefcolor()} sudo /usr/sbin/sbopkg -g "{programs}"')
         lines = ['#!/bin/bash\n\n', f'sudo /usr/sbin/sbopkg -g "{programs}"\n']
         execute(lines)
         return True
     elif command in ['b', 'build']:
-        print(f'Silk> sudo /usr/sbin/sbopkg -b "{programs}"')
+        print(f'{defcolor(style, color)}Silk>{undefcolor()} sudo /usr/sbin/sbopkg -b "{programs}"')
         lines = ['#!/bin/bash\n\n', f'sudo /usr/sbin/sbopkg -b "{programs}"\n']
         execute(lines)
         return True
     elif command in ['i', 'install']:
-        print(f'Silk> sudo /usr/sbin/sbopkg -i "{programs}"')
+        print(f'{defcolor(style, color)}Silk>{undefcolor()} sudo /usr/sbin/sbopkg -i "{programs}"')
         lines = ['#!/bin/bash\n\n', f'sudo /usr/sbin/sbopkg -i "{programs}"\n']
         execute(lines)
         return True
     elif command in ['c', 'clean']:
-        print(f'Silk> sudo /usr/sbin/sbopkg -o')
-        print(f'Silk> sudo /usr/sbin/sbopkg -P')
+        print(f'{defcolor(style, color)}Silk>{undefcolor()} sudo /usr/sbin/sbopkg -o')
+        print(f'{defcolor(style, color)}Silk>{undefcolor()} sudo /usr/sbin/sbopkg -P')
         lines = ['#!/bin/bash\n\n',
                  f'sudo /usr/sbin/sbopkg -o\n',
                  f'sudo /usr/sbin/sbopkg -P\n']
@@ -209,12 +209,12 @@ def sbopkg(command, options, programs=""):
     elif command in ['r', 'remove']:
         lines = ['#!/bin/bash\n\n']
         for pkg in programs.split():
-            print(f'Silk> sudo sbin/removepkg {pkg}')
+            print(f'{defcolor(style, color)}Silk>{undefcolor()} sudo sbin/removepkg {pkg}')
             lines.append(f'sudo /sbin/removepkg {pkg}\n')
         execute(lines)
         return True
     elif command in ['l', 'list']:
-        print(f'Silk> sudo /usr/sbin/sbopkg -p | cat')
+        print(f'{defcolor(style, color)}Silk>{undefcolor()} sudo /usr/sbin/sbopkg -p | cat')
         lines = ['#!/bin/bash\n\n',
                  f'sudo /usr/sbin/sbopkg -p | cat\n']
         execute(lines)
@@ -222,16 +222,16 @@ def sbopkg(command, options, programs=""):
     else:
         return False
 
-def slackpkg(command, options, programs=""):
+def slackpkg(style, color, command, options, programs=""):
     localops = ''
     for op in options.split():
         if op == '-y':
             localops = localops + "-batch=on -default_answer=y "
     localops = localops.strip()
     if command in ['u', 'update']:
-        print(f'Silk> sudo /usr/sbin/slackpkg {localops}update')
-        print(f'Silk> sudo /usr/sbin/slackpkg {localops}install-new')
-        print(f'Silk> sudo /usr/sbin/slackpkg {localops}upgrade-all')
+        print(f'{defcolor(style, color)}Silk>{undefcolor()} sudo /usr/sbin/slackpkg {localops}update')
+        print(f'{defcolor(style, color)}Silk>{undefcolor()} sudo /usr/sbin/slackpkg {localops}install-new')
+        print(f'{defcolor(style, color)}Silk>{undefcolor()} sudo /usr/sbin/slackpkg {localops}upgrade-all')
         lines = ['#!/bin/bash\n\n',
                  f'sudo /usr/sbin/slackpkg {localops}update\n',
                  f'sudo /usr/sbin/slackpkg {localops}install-new\n',
@@ -241,26 +241,26 @@ def slackpkg(command, options, programs=""):
     elif command in ['s', 'search']:
         lines = ['#!/bin/bash\n\n']
         for pkg in programs.split():
-            print(f'Silk> sudo /usr/sbin/slackpkg {localops}search {pkg}')
+            print(f'{defcolor(style, color)}Silk>{undefcolor()} sudo /usr/sbin/slackpkg {localops}search {pkg}')
             lines.append(f'sudo /usr/sbin/slackpkg {localops}search {pkg}\n')
         execute(lines)
         return True
     elif command in ['b', 'build']:
         lines = ['#!/bin/bash\n\n']
         for pkg in programs.split():
-            print(f'Silk> sudo /usr/sbin/slackpkg {localops}download {pkg}')
+            print(f'{defcolor(style, color)}Silk>{undefcolor()} sudo /usr/sbin/slackpkg {localops}download {pkg}')
             lines.append(f'sudo /usr/sbin/slackpkg {localops}download {pkg}\n')
         execute(lines)
         return True
     elif command in ['i', 'install']:
         lines = ['#!/bin/bash\n\n']
         for pkg in programs.split():
-            print(f'Silk> sudo /usr/sbin/slackpkg {localops}install {pkg}')
+            print(f'{defcolor(style, color)}Silk>{undefcolor()} sudo /usr/sbin/slackpkg {localops}install {pkg}')
             lines.append(f'sudo /usr/sbin/slackpkg {localops}install {pkg}\n')
         execute(lines)
         return True
     elif command in ['c', 'clean']:
-        print(f'Silk> sudo /usr/sbin/slackpkg {localops}clean-system')
+        print(f'{defcolor(style, color)}Silk>{undefcolor()} sudo /usr/sbin/slackpkg {localops}clean-system')
         lines = ['#!/bin/bash\n\n',
                  f'sudo /usr/sbin/slackpkg {localops}clean-system\n']
         execute(lines)
@@ -268,14 +268,14 @@ def slackpkg(command, options, programs=""):
     elif command in ['r', 'remove']:
         lines = ['#!/bin/bash\n\n']
         for pkg in programs.split():
-            print(f'Silk> sudo sbin/removepkg {pkg}')
+            print(f'{defcolor(style, color)}Silk>{undefcolor()} sudo sbin/removepkg {pkg}')
             lines.append(f'sudo /sbin/removepkg {pkg}\n')
         execute(lines)
         return True
     elif command in ['l', 'list']:
-        print(f'Silk> sudo rm -rf /etc/slackpkg/templates/silk.template')
-        print(f'Silk> sudo /usr/sbin/slackpkg generate-template silk')
-        print(f'Silk> cat /etc/slackpkg/templates/silk.template')
+        print(f'{defcolor(style, color)}Silk>{undefcolor()} sudo rm -rf /etc/slackpkg/templates/silk.template')
+        print(f'{defcolor(style, color)}Silk>{undefcolor()} sudo /usr/sbin/slackpkg generate-template silk')
+        print(f'{defcolor(style, color)}Silk>{undefcolor()} cat /etc/slackpkg/templates/silk.template')
         lines = ['#!/bin/bash\n\n',
                  'sudo rm -rf /etc/slackpkg/templates/silk.template\n',
                  'sudo /usr/sbin/slackpkg generate-template silk\n',
@@ -306,10 +306,10 @@ def setconfig():
         with open(f'{home}/.config/silkrc', 'w') as file:
             file.writelines('[settings]\n')
             file.writelines('version = ' + str(VERSION) + '\n\n')
-            file.writelines('slapt-get-colors = NORMAL CYAN\n')
-            file.writelines('slapt-src-colors = NORMAL YELLOW\n')
-            file.writelines('sbopkg-colors = NORMAL GREEN\n')
-            file.writelines('slackpkg-colors = NORMAL BLUE\n\n')
+            file.writelines('slapt-get-colors = BOLD CYAN\n')
+            file.writelines('slapt-src-colors = BOLD YELLOW\n')
+            file.writelines('sbopkg-colors = BOLD GREEN\n')
+            file.writelines('slackpkg-colors = BOLD BLUE\n\n')
             file.writelines('# order of execution (write 0 to prevent running):\n')
             file.writelines('slapt-get = 1\n')
             file.writelines('slapt-src = 2\n')
@@ -343,8 +343,7 @@ def main():
                 fsetting = f.__name__.replace('_','-')
                 if str(t) == config.get('settings',fsetting):
                     c = config.get('settings', fsetting + '-colors').split()
-                    setcolor(style2int(c[0]), color2int(c[1]))
-                    if not f(command, options, programs):
+                    if not f(style2int(c[0]), color2int(c[1]), command, options, programs):
                         usage(config)
                         resetcolor()
                         return
