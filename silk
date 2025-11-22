@@ -34,7 +34,8 @@ import os
 import subprocess
 import configparser
 
-VERSION = '1.0' # The version of the silkrc file format
+VERSION = '1.0.1' # The version of the program
+SILKRC_VERSION = '1.0' # The version of the silkrc file format
 
 # https://stackabuse.com/how-to-print-colored-text-in-python/
 ESC = '\033['
@@ -290,7 +291,7 @@ def setconfig():
     createfile=False
     if os.path.isfile(rc):
         config.read(rc)
-        if (config.get('settings','version') != VERSION):
+        if (config.get('settings','version') != SILKRC_VERSION):
             createfile = True
         else:
             print(f'Loaded {home}/.config/silkrc\n')
@@ -303,7 +304,7 @@ def setconfig():
         print(f'Please re-run the program now with the correct settings.\n')
         with open(f'{home}/.config/silkrc', 'w') as file:
             file.writelines('[settings]\n')
-            file.writelines('version = ' + str(VERSION) + '\n\n')
+            file.writelines('version = ' + str(SILKRC_VERSION) + '\n\n')
             file.writelines('slapt-get-colors = BOLD CYAN\n')
             file.writelines('slapt-src-colors = BOLD YELLOW\n')
             file.writelines('sbopkg-colors = BOLD GREEN\n')
