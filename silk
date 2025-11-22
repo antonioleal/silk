@@ -67,19 +67,17 @@ def color2int(color):
     return values[color]
 
 def usage(config):
-    print (f"Silk {VERSION} is a practical frontend to various slackware package management tools.")
+    print (f"Silk {VERSION} is a practical frontend to various slackware package management tools.\n")
     print (f"The following order is defined:")
-    setcolor(NORMAL, RED)
     aux = []
     for f in FUNCS:
         fsetting = f.__name__.replace('_','-')
         order = config.get('settings', fsetting)
         if order in '1234':
-            aux.append(f'({order}) {fsetting}')
+            aux.append(f'{defcolor(NORMAL, RED)}({order}){undefcolor()} {fsetting}')
     lst = sorted(aux)
     for func in lst:
         print(f'    {func}')
-    resetcolor()
     print ()
     print ("Usage: silk command [options] [programs]")
     print ()

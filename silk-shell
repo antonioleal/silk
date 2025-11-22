@@ -33,6 +33,7 @@ import readline
 import rlcompleter
 import atexit
 import os
+import configparser
 
 # set history file
 histfile = os.path.join(os.environ['HOME'], '.silkhistory')
@@ -43,15 +44,53 @@ except IOError:
 atexit.register(readline.write_history_file, histfile)
 del os, histfile, readline, rlcompleter
 
-# show help in first run
+# show help in first run and ensure silkrc exists
 exec(open("/usr/bin/silk").read())
+
+# read silkrc
+home = os.path.expanduser('~')
+rc = f'{home}/.config/silkrc'
+config = configparser.ConfigParser()
+config.read(rc)
+
+def subshell(prg):
+    os.system('clear')
+    tools={}
+    for value in ['slapt-get', 'slapt-src', 'sbopkg', 'slackpkg']:
+        key = config.get('settings',value)
+        tools[key] = value
+    if tools[str(prg)] == 'slapt-src':
+        os.system(f'sudo /usr/bin/{tools[str(prg)]}')
+    else:
+        os.system(f'sudo /usr/sbin/{tools[str(prg)]}')
+    while(True):
+        print(f'\n\033[1;30mYou are running a {tools[str(prg)]} shell, please type your commands directly.')
+        print('Type "q", "quit" or press ctrl-d to end your session.\n')
+        try:
+            cmd = input(f'{tools[str(prg)]}>\033[0;0m ')
+        except EOFError:
+            print(endmsg)
+            return
+        except KeyboardInterrupt:
+            print(endmsg)
+            return
+        if cmd.lower() == 'q' or cmd.lower() == 'quit':
+            print(endmsg)
+            return
+        os.system('clear')
+        if tools[str(prg)] == 'slapt-src':
+            os.system(f'sudo /usr/bin/{tools[str(prg)]} ' + cmd)
+        else:
+            os.system(f'sudo /usr/sbin/{tools[str(prg)]} ' + cmd)
+
 
 endmsg = '\nProgram terminated by user.'
 while(True):
-    print('You are running silk-shell, please type your commands directly.')
+    print('\033[1;30mYou are running silk-shell, please type your commands directly.')
+    print('Type "1-4" for entering the corresponding tool sub-shell.')
     print('Type "q", "quit" or press ctrl-d to end your session.\n')
     try:
-        cmd = input('Silk> ')
+        cmd = input('Silk>\033[0;0m ')
     except EOFError:
         print(endmsg)
         exit(0)
@@ -61,5 +100,8 @@ while(True):
     if cmd.lower() == 'q' or cmd.lower() == 'quit':
         print(endmsg)
         exit(0)
+    if len(cmd) != 0:
+        if cmd in '1234':
+            subshell(cmd)
     sys.argv = ['/usr/bin/silk'] + cmd.split()
-    exec(open("/usr/bin/silk").read())
+    exec(open('/usr/bin/silk').read())
