@@ -304,7 +304,7 @@ def setconfig():
         with open(f'{home}/.config/silkrc', 'w') as file:
             file.writelines('[settings]\n')
             file.writelines('version = ' + str(SILKRC_VERSION) + '\n\n')
-            file.writelines('slapt-get-colors = BOLD CYAN\n')
+            file.writelines('slapt-get-colors = BOLD RED\n')
             file.writelines('slapt-src-colors = BOLD YELLOW\n')
             file.writelines('sbopkg-colors = BOLD GREEN\n')
             file.writelines('slackpkg-colors = BOLD BLUE\n\n')
