@@ -72,10 +72,13 @@ def preprompt(tool):
 def subshell(key):
     os.system('clear')
     tools = gettools()
-    if tools[key] == 'slapt-src':
-        os.system(f'sudo /usr/bin/{tools[key]}')
-    else:
-        os.system(f'sudo /usr/sbin/{tools[key]}')
+    try:
+        if tools[key] == 'slapt-src':
+            os.system(f'sudo /usr/bin/{tools[key]}')
+        else:
+            os.system(f'sudo /usr/sbin/{tools[key]}')
+    except KeyError:
+        return
     while(True):
         preprompt(tools[key])
         try:
