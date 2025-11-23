@@ -47,61 +47,73 @@ del os, histfile, readline, rlcompleter
 # show help in first run and ensure silkrc exists
 exec(open("/usr/bin/silk").read())
 
-# read silkrc
-home = os.path.expanduser('~')
-rc = f'{home}/.config/silkrc'
-config = configparser.ConfigParser()
-config.read(rc)
-
-def subshell(prg):
-    os.system('clear')
+# read silkrc into a tools dictionary
+def gettools():
+    home = os.path.expanduser('~')
+    rc = f'{home}/.config/silkrc'
+    config = configparser.ConfigParser()
+    config.read(rc)
     tools={}
     for value in ['slapt-get', 'slapt-src', 'sbopkg', 'slackpkg']:
         key = config.get('settings',value)
         tools[key] = value
-    if tools[str(prg)] == 'slapt-src':
-        os.system(f'sudo /usr/bin/{tools[str(prg)]}')
+    return tools
+
+def endmsg():
+    print('\nProgram terminated by user.')
+
+def preprompt(tool):
+    print(f'\n\033[1;30mYou are running a {tool} shell, please type your commands directly.')
+    if tool == 'Silk':
+        print('Type "1-4" for entering the corresponding tool sub-shell.')
+    print('Type "q", "quit" or press ctrl-d to end your session.\n')
+
+# subshell for slapt-get, slapt-src, sbopkg and slackpkg
+def subshell(key):
+    os.system('clear')
+    tools = gettools()
+    if tools[key] == 'slapt-src':
+        os.system(f'sudo /usr/bin/{tools[key]}')
     else:
-        os.system(f'sudo /usr/sbin/{tools[str(prg)]}')
+        os.system(f'sudo /usr/sbin/{tools[key]}')
     while(True):
-        print(f'\n\033[1;30mYou are running a {tools[str(prg)]} shell, please type your commands directly.')
-        print('Type "q", "quit" or press ctrl-d to end your session.\n')
+        preprompt(tools[key])
         try:
-            cmd = input(f'{tools[str(prg)]}>\033[0;0m ')
+            cmd = input(f'{tools[key]}>\033[0;0m ')
         except EOFError:
-            print(endmsg)
+            endmsg()
             return
         except KeyboardInterrupt:
-            print(endmsg)
+            endmsg()
             return
         if cmd.lower() == 'q' or cmd.lower() == 'quit':
-            print(endmsg)
+            endmsg()
             return
         os.system('clear')
-        if tools[str(prg)] == 'slapt-src':
-            os.system(f'sudo /usr/bin/{tools[str(prg)]} ' + cmd)
+        if tools[key] == 'slapt-src':
+            os.system(f'sudo /usr/bin/{tools[key]} ' + cmd)
         else:
-            os.system(f'sudo /usr/sbin/{tools[str(prg)]} ' + cmd)
+            os.system(f'sudo /usr/sbin/{tools[key]} ' + cmd)
 
+def main():
+    while(True):
+        preprompt('Silk')
+        try:
+            cmd = input('Silk>\033[0;0m ')
+        except EOFError:
+            endmsg()
+            exit(0)
+        except KeyboardInterrupt:
+            endmsg()
+            exit(0)
+        if cmd.lower() == 'q' or cmd.lower() == 'quit':
+            endmsg()
+            exit(0)
+        if len(cmd) == 1:
+            if cmd in '1234':
+                subshell(cmd[0])
+        sys.argv = ['/usr/bin/silk'] + cmd.split()
+        exec(open('/usr/bin/silk').read())
 
-endmsg = '\nProgram terminated by user.'
-while(True):
-    print('\033[1;30mYou are running silk-shell, please type your commands directly.')
-    print('Type "1-4" for entering the corresponding tool sub-shell.')
-    print('Type "q", "quit" or press ctrl-d to end your session.\n')
-    try:
-        cmd = input('Silk>\033[0;0m ')
-    except EOFError:
-        print(endmsg)
-        exit(0)
-    except KeyboardInterrupt:
-        print(endmsg)
-        exit(0)
-    if cmd.lower() == 'q' or cmd.lower() == 'quit':
-        print(endmsg)
-        exit(0)
-    if len(cmd) != 0:
-        if cmd in '1234':
-            subshell(cmd)
-    sys.argv = ['/usr/bin/silk'] + cmd.split()
-    exec(open('/usr/bin/silk').read())
+if __name__ == '__main__':
+    main()
