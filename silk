@@ -299,9 +299,8 @@ def setconfig():
         createfile = True
     if createfile:
         setcolor(BOLD, RED)
-        print(f'Warning: {home}/.config/silkrc config file is invalid/older, creating a new one...')
+        print(f'Warning: {home}/.config/silkrc config file is invalid/older, creating a new one...\n')
         resetcolor()
-        print(f'Please re-run the program now with the correct settings.\n')
         with open(f'{home}/.config/silkrc', 'w') as file:
             file.writelines('[settings]\n')
             file.writelines('version = ' + str(SILKRC_VERSION) + '\n\n')
