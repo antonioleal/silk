@@ -27,6 +27,11 @@ directly at the "Silk>" prompt, for example:
 
     Silk> u
 
+The silk-shell Main window:
+<img src="media/main.png"  alt="Silk" style="width:100%; height:auto;"/>
+Search results of command "s ardour":
+<img src="media/search.png"  alt="Silk" style="width:100%; height:auto;"/>
+
 Notes:
   * 'sl' and 'slapt' are symlinks to 'silk'. Use them as aliases for 'silk'.
   * This program conflicts with the 'sl' package found in SlackBuilds.org, do not install both at the same time.
