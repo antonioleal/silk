@@ -30,7 +30,7 @@ The silk-shell Main window:
 An example of the search results, after the command "s ardour":
 <img src="media/search.png"  alt="Silk" style="width:100%; height:auto;"/>
 
-Each tool sub-shell is enabled by pressing the corresponding tool number 1-4.
+Each tool sub-shell is enabled by entering the corresponding tool number 1-4.
 Once inside the sub-shell the usage is similar to the main shell.
 
 Notes:
