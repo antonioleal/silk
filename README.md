@@ -3,7 +3,7 @@
 
 ## Description
 
-Silk is a practical front end to various slackware package management
+Silk is a practical front end to various Slackware package management
 tools, namely slackpkg, sbopkg, slapt-get and slapt-src.
 It implements the more common commands and simplifies the operation
 of multiple programs by unifying their syntax and execution. The idea is to handle all just as 'packages', independently if they are distributed as binary or source, and manage them through a simple and fast user interface.
@@ -27,7 +27,7 @@ directly at the "Silk>" prompt, for example:
 The silk-shell Main window:
 <img src="media/main.png"  alt="Silk" style="width:100%; height:auto;"/>
 
-Search results of command "s ardour":
+An example of the search results, after the command "s ardour":
 <img src="media/search.png"  alt="Silk" style="width:100%; height:auto;"/>
 
 Each tool sub-shell is enabled by pressing the corresponding tool number 1-4.
