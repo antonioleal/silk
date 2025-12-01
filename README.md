@@ -1,5 +1,7 @@
 # Less Typing with Silk...
-<img src="silk.png"  alt="Silk" style="width:15%; height:auto;"/>
+<p align="center">
+<img src="silk.png"  alt="Silk" style="width:20%; height:auto;"/>
+</p>
 
 ## Description
 
