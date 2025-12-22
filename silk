@@ -96,7 +96,8 @@ def usage(config):
     print ("")
     print ("options:")
     print ("    -y                           do not prompt for install/upgrade, assume yes")
-    print ("    -o[1-4]                      select which tools (1-4) to run and the order of execution")
+    print ("    -[1-4]                       select which tools (1-4) to run and the order of execution")
+    print ("                                 for example: 'u -13' to update using  tool 1 and 3")
     print ("")
     print (f"Please also check ~/.config/silkrc settings to decide which tools you want to run.\n")
 
@@ -334,8 +335,8 @@ def main():
 
         sequence = '1234'
         for x in options.split():
-            if x[0:2] == '-o':
-                sequence = x[2:]
+            if x[0] == '-' and x[1] in "1234":
+                sequence = x[1:]
         for t in sequence:
             for f in FUNCS:
                 fsetting = f.__name__.replace('_','-')
