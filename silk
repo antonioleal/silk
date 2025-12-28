@@ -103,11 +103,11 @@ def usage(config):
     print (f"Please also check ~/.config/silkrc settings to decide which tools you want to run.\n")
 
 def execute(lines):
-    #print(lines)
     with open('/tmp/silk', 'w') as file:
         file.writelines(lines)
     os.system('chmod +x /tmp/silk')
     subprocess.call('/tmp/silk')
+    os.system('rm -rf /tmp/silk*')
 
 def slapt_get(style, color, command, options, programs=""):
     localops = ''
