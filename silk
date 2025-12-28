@@ -96,8 +96,9 @@ def usage(config):
     print ("")
     print ("options:")
     print ("    -y                           do not prompt for install/upgrade, assume yes")
-    print ("    -[1-4]                       select which tools (1-4) to run and the order of execution")
-    print ("                                 for example: 'u -13' to update using  tool 1 and 3")
+    print ("    -[1-4]                       select which tools (1-4) to run and the order of execution,")
+    print ("                                 for example: 'u -31' to update, starting with the 3rd tool,")
+    print ("                                              then followed by the 1st tool")
     print ("")
     print (f"Please also check ~/.config/silkrc settings to decide which tools you want to run.\n")
 
