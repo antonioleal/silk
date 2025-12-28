@@ -129,7 +129,6 @@ def slapt_get(style, color, command, options, programs=""):
     for op in options.split():
         if op == '-y':
             localops = localops + "-y "
-    localops = localops.strip()
     if localcmd != "":
         print(f'{defcolor(style, color)}Silk> sudo /usr/sbin/slapt-get {localops}{localcmd} {programs}{undefcolor()}')
         lines = ['#!/bin/bash\n\n', f'sudo /usr/sbin/slapt-get {localops}{localcmd} {programs}\n']
@@ -161,7 +160,6 @@ def slapt_src(style, color, command, options, programs=""):
     for op in options.split():
         if op == '-y':
             localops = localops + "-y "
-    localops = localops.strip()
     if localcmd != "":
         print(f'{defcolor(style, color)}Silk> sudo /usr/bin/slapt-src {localops}{localcmd} {programs}{undefcolor()}')
         lines = ['#!/bin/bash\n\n', f'sudo /usr/bin/slapt-src {localops}{localcmd} {programs}\n']
@@ -228,7 +226,6 @@ def slackpkg(style, color, command, options, programs=""):
     for op in options.split():
         if op == '-y':
             localops = localops + "-batch=on -default_answer=y "
-    localops = localops.strip()
     if command in ['u', 'update']:
         print(f'{defcolor(style, color)}Silk> sudo /usr/sbin/slackpkg {localops}update{undefcolor()}')
         print(f'{defcolor(style, color)}Silk> sudo /usr/sbin/slackpkg {localops}install-new{undefcolor()}')
@@ -353,5 +350,3 @@ def main():
 if __name__ == '__main__':
     FUNCS = [slapt_get, slapt_src, sbopkg, slackpkg]
     main()
-
-
