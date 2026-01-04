@@ -153,7 +153,7 @@ def slapt_src(style, color, command, options, programs=""):
     if command in ['c', 'clean']:
         localcmd = '--clean'
     if command in ['r', 'remove']:
-        return
+        return True
     if command in ['l', 'list']:
         localcmd = '--list'
     for op in options.split():
