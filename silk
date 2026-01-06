@@ -34,7 +34,7 @@ import os
 import subprocess
 import configparser
 
-VERSION = '1.0.4-dev' # The version of the program
+VERSION = '1.0.4' # The version of the program
 SILKRC_VERSION = '1.0' # The version of the silkrc file format
 
 ESC = '\033['
