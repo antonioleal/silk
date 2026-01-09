@@ -102,11 +102,15 @@ def usage(config):
     print (f"Please also check ~/.config/silkrc settings to decide which tools you want to run.\n")
 
 def execute(lines):
-    with open('/tmp/silk', 'w') as file:
-        file.writelines(lines)
-    os.system('sudo chmod +x /tmp/silk')
-    subprocess.call('/tmp/silk')
-    os.system('sudo rm -rf /tmp/silk*')
+    try:
+        with open('/tmp/silk', 'w') as file:
+            file.writelines(lines)
+        os.system('sudo chmod +x /tmp/silk')
+        subprocess.call('/tmp/silk')
+        os.system('sudo rm -rf /tmp/silk*')
+    except:
+        print("Silk execution aborted...")
+        sys.exit(0)
 
 def slapt_get(style, color, command, options, programs=""):
     localops = ''
