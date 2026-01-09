@@ -117,17 +117,17 @@ def slapt_get(style, color, command, options, programs=""):
     localcmd = ''
     if command in ['u', 'update']:
         localcmd = '-u'
-    if command in ['s', 'search']:
+    elif command in ['s', 'search']:
         localcmd = '--search'
-    if command in ['b', 'build']:
+    elif command in ['b', 'build']:
         localcmd = '-d --install'
-    if command in ['i', 'install']:
+    elif command in ['i', 'install']:
         localcmd = '--install'
-    if command in ['c', 'clean']:
+    elif command in ['c', 'clean']:
         localcmd = '--clean'
-    if command in ['r', 'remove']:
+    elif command in ['r', 'remove']:
         localcmd = '--remove'
-    if command in ['l', 'list']:
+    elif command in ['l', 'list']:
         localcmd = '--available'
     for op in options.split():
         if op == '-y':
@@ -148,17 +148,17 @@ def slapt_src(style, color, command, options, programs=""):
     localcmd = ''
     if command in ['u', 'update']:
         localcmd = '-u'
-    if command in ['s', 'search']:
+    elif command in ['s', 'search']:
         localcmd = '--search'
-    if command in ['b', 'build']:
+    elif command in ['b', 'build']:
         localcmd = '--build'
-    if command in ['i', 'install']:
+    elif command in ['i', 'install']:
         localcmd = '--install'
-    if command in ['c', 'clean']:
+    elif command in ['c', 'clean']:
         localcmd = '--clean'
-    if command in ['r', 'remove']:
+    elif command in ['r', 'remove']:
         return True
-    if command in ['l', 'list']:
+    elif command in ['l', 'list']:
         localcmd = '--list'
     for op in options.split():
         if op == '-y':
